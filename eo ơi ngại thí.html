@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For you ♡</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700;800&family=Pacifico&display=swap');
+:root{--pink:#ff78a9;--deep:#e94f88;--pale:#fff0f6;--ink:#79445b}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;overflow:hidden;font-family:Quicksand,sans-serif;color:var(--ink);background:linear-gradient(135deg,#fff5f8,#ffe0ec 55%,#ffd0e1);display:grid;place-items:center}
+#petals{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.petal{position:absolute;top:-35px;width:15px;height:20px;background:linear-gradient(145deg,#ffd3e3,#ff8fb8);border-radius:2px 90% 2px 90%;opacity:.8;animation:fall linear infinite}
+@keyframes fall{to{transform:translate3d(var(--drift),110vh,0) rotate(720deg)}}
+.glow{position:fixed;width:340px;height:340px;border-radius:50%;background:#ffb7d1;filter:blur(90px);opacity:.45;pointer-events:none}
+.card{position:relative;z-index:1;width:min(92vw,510px);min-height:390px;padding:42px 30px 34px;text-align:center;background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.9);border-radius:30px;box-shadow:0 22px 70px #d85d8a2b;backdrop-filter:blur(12px);display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flower{font-size:38px;margin-bottom:8px;filter:drop-shadow(0 5px 5px #ffb4cf)}
+h1{font-family:Pacifico,cursive;font-weight:400;font-size:clamp(27px,6vw,37px);color:var(--deep);margin:5px 0 12px}
+p{font-size:15px;line-height:1.7;margin:4px 0 20px;color:#956276}
+input{width:100%;max-width:330px;padding:15px 18px;border:2px solid #ffd0e1;border-radius:16px;background:#fffafd;font:600 16px Quicksand;color:var(--ink);outline:none;text-align:center}
+input:focus{border-color:var(--pink);box-shadow:0 0 0 4px #ffb8d033}
+button{font:700 15px Quicksand;border:0;border-radius:999px;padding:13px 25px;cursor:pointer;transition:transform .2s,box-shadow .2s}
+button:hover{transform:translateY(-2px);box-shadow:0 8px 18px #d85d8a2b}
+.primary{color:white;background:linear-gradient(135deg,#ff8db5,#ec5b91);margin-top:18px}
+.soft{background:#fff0f6;color:#d95789;border:1px solid #ffd0e1}
+.actions{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:18px;min-height:48px;width:100%}
+#noBtn{background:#fff0f6;color:#d95789;border:1px solid #ffd0e1;position:relative}
+.choice{min-width:130px}
+.hidden{display:none!important}
+.note{font-size:12px;color:#c18ba1;margin-top:22px}
+#tease{position:fixed;z-index:5;left:50%;top:15%;transform:translateX(-50%);width:min(88vw,340px);padding:19px;background:white;border:1px solid #ffd0e1;border-radius:20px;box-shadow:0 15px 45px #a84e752e;animation:pop .3s ease;text-align:center}
+@keyframes pop{from{opacity:0;transform:translate(-50%,10px) scale(.9)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+#tease button{margin-top:10px}
+.wheel-wrap{position:relative;width:250px;height:250px;margin:12px auto 16px}
+#wheel{position:relative;width:100%;height:100%;border-radius:50%;border:8px solid white;box-shadow:0 8px 25px #d85d8a33;transition:transform 3s cubic-bezier(.12,.75,.15,1);background:conic-gradient(#ffd3e3 0deg 180deg,#ff8db5 180deg 360deg);display:block;overflow:hidden}
+.pointer{position:absolute;top:-10px;left:50%;transform:translateX(-50%);z-index:2;width:0;height:0;border-left:13px solid transparent;border-right:13px solid transparent;border-top:25px solid #b94b78;filter:drop-shadow(0 2px 2px #0002)}
+.wheel-label{position:absolute;inset:0;pointer-events:none;font-weight:800;font-size:clamp(14px,3.5vw,18px);color:#fff;text-shadow:0 1px 4px #a64b70}
+.wheel-label span{position:absolute;top:50%;width:50%;text-align:center;white-space:nowrap}
+.wheel-label .yes{left:50%;transform:translateY(-50%);color:#c45a83;text-shadow:none}
+.wheel-label .no{left:0;transform:translateY(-50%);color:#fff}
+.sticker{position:fixed;z-index:1;pointer-events:none;font-size:34px;filter:drop-shadow(0 5px 7px #d65b8a30);animation:bob 3s ease-in-out infinite}
+.sticker.s1{left:5%;top:15%;animation-delay:-.7s}.sticker.s2{right:6%;top:22%;font-size:39px;animation-delay:-1.6s}.sticker.s3{left:8%;bottom:12%;font-size:30px;animation-delay:-2.1s}.sticker.s4{right:7%;bottom:10%;font-size:32px;animation-delay:-.3s}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-15px) rotate(9deg)}}
+#spinBtn{margin-top:5px}
+#result{font-family:Pacifico,cursive;color:var(--deep);font-size:26px;margin-top:12px;min-height:36px}
+@media(max-width:420px){.card{padding:34px 20px;min-height:370px}.wheel-wrap{width:220px;height:220px}}
+</style>
+</head>
+<body>
+<div class="glow"></div><div id="petals"></div>
+<div class="sticker s1">🐰</div><div class="sticker s2">💗</div>
+<div class="sticker s3">🌸</div><div class="sticker s4">🐻‍❄️</div>
+<main class="card">
+  <section id="stepName">
+    <div class="flower">🌸</div><h1>Chào cậu nè!</h1>
+    <p>Tớ có một điều bí mật muốn hỏi cậu…<br>Trước tiên, cho tớ biết tên cậu nha ♡</p>
+    <input id="nameInput" maxlength="28" placeholder="Tên cậu là..." autocomplete="off">
+    <button class="primary" id="startBtn">Tiếp tục nè ♡</button>
+  </section>
+  <section id="stepFeel" class="hidden">
+    <div class="flower">🌷</div><h1 id="feelTitle">Cậu thấy tớ như thế nào?</h1>
+    <p>Chọn thật lòng nha, tớ không dỗi đâu… chắc vậy 🌸</p>
+    <div class="actions" style="flex-direction:column;align-items:center">
+      <button class="soft choice" data-feel="Dễ thương xỉu">Dễ thương xỉu 🥺</button>
+      <button class="soft choice" data-feel="Đáng iu hết sức">Đáng iu hết sức 💗</button>
+      <button class="soft choice" data-feel="Muốn ở bên cạnh">Muốn ở bên cạnh 🌷</button>
+    </div>
+  </section>
+  <section id="stepAsk" class="hidden">
+    <div class="flower">💗</div><h1 id="askTitle">Vậy cậu đồng ý làm ny tớ nhee?</h1>
+    <p>Tớ đã suy nghĩ rất lâu mới dám hỏi đó…</p>
+    <div class="actions">
+      <button class="primary" id="yesBtn">Có 💖</button>
+      <button id="noBtn">Không 🙈</button>
+    </div>
+    <div class="note">P/s: trái tim tớ đang đập nhanh lắm đó</div>
+  </section>
+  <section id="stepYes" class="hidden">
+    <div class="flower">🌸💞🌸</div><h1>Hí hí iu cậu théeeee!</h1>
+    <p id="loveText">Từ nay chúng mình là một đôi nhaaa 💗<br>Gửi cậu một cái ôm thật to!</p>
+    <div style="font-size:44px;margin-top:5px">🥰🫶🏻🌷</div>
+  </section>
+  <section id="stepWheel" class="hidden">
+    <div class="flower">🎀</div><h1>Vòng quay định mệnh</h1>
+    <p>Vậy tớ hỏi lại, cậu làm ny tớ nhé? 💗</p>
+    <div class="wheel-wrap">
+      <div class="pointer"></div>
+      <div id="wheel">
+        <div class="wheel-label"><span class="yes">CÓ 💖</span><span class="no">KHÔNG 🙈</span></div>
+      </div>
+    </div>
+    <button class="primary" id="spinBtn">Quay ngay! ✨</button>
+    <div id="result"></div>
+  </section>
+</main>
+<div id="tease" class="hidden"><div style="font-size:28px">🥹🌸</div><strong>Không bấm được à, thế chọn cái nì đi!</strong><br><button class="primary" id="wheelBtn">Chọn cái nì 🎀</button></div>
+<script>
+const $=id=>document.getElementById(id);
+const sections=['stepName','stepFeel','stepAsk','stepYes','stepWheel'];
+let crushName='cậu', dodges=0, spinning=false, wheelRotation=0;
+function show(id){sections.forEach(s=>$(s).classList.toggle('hidden',s!==id));}
+function petals(){for(let i=0;i<28;i++){let p=document.createElement('i');p.className='petal';p.style.left=Math.random()*100+'%';p.style.animationDuration=(7+Math.random()*9)+'s';p.style.animationDelay=(-Math.random()*15)+'s';p.style.setProperty('--drift',(Math.random()*180-90)+'px');p.style.transform=`scale(${.55+Math.random()*.8})`;document.getElementById('petals').appendChild(p)}}
+petals();
+$('startBtn').onclick=()=>{const n=$('nameInput').value.trim();if(!n){$('nameInput').focus();$('nameInput').placeholder='Nhập tên cậu trước đã nhaa 💗';return}crushName=n;$('feelTitle').textContent=`${crushName} thấy tớ như thế nào?`;show('stepFeel')};
+$('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('startBtn').click()});
+document.querySelectorAll('[data-feel]').forEach(b=>b.onclick=()=>{ $('askTitle').textContent=`Vậy ${crushName} đồng ý làm ny tớ nhee?`;show('stepAsk')});
+$('yesBtn').onclick=()=>{ $('loveText').innerHTML=`${crushName} ơi, từ nay chúng mình là một đôi nhaaa 💗<br>Gửi cậu một cái ôm thật to!`;show('stepYes');for(let i=0;i<22;i++){let s=document.createElement('span');s.textContent=['💗','🌸','💕','✨'][i%4];s.style.cssText=`position:fixed;left:${Math.random()*100}vw;top:${Math.random()*100}vh;font-size:${18+Math.random()*25}px;pointer-events:none;z-index:8;animation:pop .7s ease`;document.body.appendChild(s);setTimeout(()=>s.remove(),1800)}};
+function dodge(){if($('stepAsk').classList.contains('hidden'))return;dodges++;const b=$('noBtn');const area=$('stepAsk').getBoundingClientRect();const maxX=Math.max(0,area.width-b.offsetWidth-35),maxY=120;b.style.position='absolute';b.style.left=(15+Math.random()*maxX)+'px';b.style.top=(area.height/2+Math.random()*maxY-20)+'px';if(dodges>=4)$('tease').classList.remove('hidden')}
+$('noBtn').addEventListener('mouseenter',dodge);
+$('noBtn').addEventListener('touchstart',e=>{e.preventDefault();dodge()},{passive:false});
+$('wheelBtn').onclick=()=>{$('tease').classList.add('hidden');show('stepWheel')};
+$('spinBtn').onclick=()=>{if(spinning)return;spinning=true;$('result').textContent='';$('spinBtn').disabled=true;wheelRotation += 360*5+270;$('wheel').style.transform=`rotate(${wheelRotation}deg)`;setTimeout(()=>{$('result').textContent='CÓ 💖';$('spinBtn').disabled=false;spinning=false;$('spinBtn').textContent='Quay lại lần nữa? ✨'},3100)};
+</script>
+</body></html>
